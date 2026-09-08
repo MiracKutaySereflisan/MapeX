@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  ════════════════════════════════════════════════════════════════════
+	  BU DOSYA HENÜZ PROJEYE BAĞLI DEĞİL (CODE_SIGN_ENTITLEMENTS boş).
+	  Bağlanana kadar: Simulator derlemeleri sorunsuz, WeatherKit çalışmaz,
+	  uygulama sessizce KURU zemine düşer — tasarım gereği, zararsız.
+	  ════════════════════════════════════════════════════════════════════
+
+	  ── ① WEATHERKIT — şimdi açılabilir ─────────────────────────────────
+	  Başvuru YOK, ücretsiz kotası aylık 500 bin çağrı. Üç adım:
+
+	    1. developer.apple.com > Certificates, IDs & Profiles > Identifiers
+	       > com.sereflisan.mirac.MapeX > WeatherKit'i işaretle > Save
+	    2. Xcode > hedef MapeX > Signing & Capabilities > + Capability
+	       > WeatherKit   (Xcode bu dosyayı kendisi bağlar)
+	    3. Doğrula:
+	       grep CODE_SIGN_ENTITLEMENTS MapeX3.xcodeproj/project.pbxproj
+
+	  Açılmadan önce hava çipi HİÇ GÖRÜNMEZ (boş kutu göstermek yerine yer
+	  kaplamaz) ve zemin kuru varsayılır. Açıldıktan sonra kendiliğinden
+	  çalışmaya başlar; kodda değişiklik gerekmez.
+
+	  Apple, WeatherKit kullanan uygulamalardan atıf ve yasal bağlantı
+	  göstermelerini ŞART koşar — hava çipinin menüsünde " Weather"
+	  bağlantısı olarak var (bkz. `WeatherChip`).
+
+	  ── ② CARPLAY — henüz açma ──────────────────────────────────────────
+	  `com.apple.developer.carplay-maps` Apple'a AYRICA başvurulan bir
+	  yetkidir ve Apple navigasyon kategorisinde seçicidir. Hesabında tanımlı
+	  değilken bu anahtarı eklersen sağlama profili onu içermez ve GERÇEK
+	  CİHAZA KURULUM BAŞARISIZ OLUR — CarPlay'i denemek bir yana, uygulamayı
+	  telefona atamazsın.
+
+	  Bu yüzden anahtar aşağıda YORUM İÇİNDE bekliyor. Başvuru:
+	    https://developer.apple.com/contact/carplay/   (tür: navigation)
+	  Onay gelince aşağıdaki iki satırı yorumdan çıkar.
+
+	  CarPlay sahnesi Simulator'da yetkisiz de açılır:
+	    Simulator > I/O > External Displays > CarPlay
+
+	  <key>com.apple.developer.carplay-maps</key>
+	  <true/>
+	-->
+	<key>com.apple.developer.weatherkit</key>
+	<true/>
+</dict>
+</plist>

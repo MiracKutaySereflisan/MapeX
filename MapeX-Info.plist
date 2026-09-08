@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Bu dosya YALNIZCA üretilen Info.plist'in ifade edemediği anahtarları
+	  taşır. Geri kalan her şey (izin metinleri, ekran yönü, kategori) hâlâ
+	  hedef ayarlarındaki INFOPLIST_KEY_* değerlerinden üretilir ve buraya
+	  birleştirilir.
+
+	  NEDEN GEREKLİ:
+	  Xcode'un INFOPLIST_KEY_* mekanizması dizi tipli UIBackgroundModes'u
+	  desteklemiyor — ayar yazılsa bile üretilen plist'e GEÇMİYOR. Sonuç
+	  ölümcüldü: CLLocationManager.allowsBackgroundLocationUpdates = true,
+	  Info.plist'te "location" arka plan modu yoksa yakalanamayan bir istisna
+	  fırlatır ve uygulama sürüş başlar başlamaz ÇÖKER.
+	-->
+	<key>UIBackgroundModes</key>
+	<array>
+		<!-- Sürüş sırasında ekran kapalıyken de konum akışı sürsün -->
+		<string>location</string>
+		<!-- Arka planda sesli anons ve uyarı tonları çalabilsin -->
+		<string>audio</string>
+	</array>
+
+	<!--
+	  CARPLAY SAHNESİ
+
+	  Yalnızca CarPlay rolü bildirilir. Telefonun kendi pencere sahnesini
+	  SwiftUI'ın `WindowGroup`u sağlamaya devam eder; onu burada tekrar
+	  tanımlamak gerekmez ve tanımlamak SwiftUI'ın sahne yönetimini bozar.
+
+	  `UISceneDelegateClassName` modül adıyla nitelenmelidir — Swift sınıfları
+	  Objective-C çalışma zamanında `ModülAdı.SınıfAdı` diye görünür. Yalnızca
+	  "CarPlaySceneDelegate" yazılsaydı sınıf BULUNAMAZ, CarPlay bağlanır ama
+	  ekran boş kalırdı (sessiz hata).
+	-->
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>CPTemplateApplicationSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>CPTemplateApplicationScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>MapeXCarPlay</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+</dict>
+</plist>
